@@ -42,20 +42,28 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <Border x:Name="Bd" Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="2"
-                            Padding="{TemplateBinding Padding}"
-                            SnapsToDevicePixels="True">
-                        <GridViewRowPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                    </Border>
+                    <Grid>
+                        <Rectangle x:Name="SelectionBar"
+                                   Width="3"
+                                   HorizontalAlignment="Left"
+                                   Fill="{DynamicResource ColorBrush2}"
+                                   Visibility="Collapsed" />
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="2"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <GridViewRowPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ColorBrush8}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="SelectionBar" Property="Visibility" Value="Visible" />
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ColorBrush7}" />
                             <Setter Property="Foreground" Value="{DynamicResource ColorBrush2}" />
                         </Trigger>
