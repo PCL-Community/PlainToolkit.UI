@@ -43,11 +43,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
                     <Grid>
-                        <Rectangle x:Name="SelectionBar"
-                                   Width="3"
-                                   HorizontalAlignment="Left"
-                                   Fill="{DynamicResource ColorBrush2}"
-                                   Visibility="Collapsed" />
                         <Border x:Name="Bd" Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -57,6 +52,13 @@
                             <GridViewRowPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Border>
+                        <Rectangle x:Name="SelectionBar"
+                                   Width="3" Height="16"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   RadiusX="1.5" RadiusY="1.5"
+                                   Fill="{DynamicResource ColorBrush2}"
+                                   Visibility="Collapsed" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
