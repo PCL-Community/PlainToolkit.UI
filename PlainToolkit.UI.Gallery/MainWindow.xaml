@@ -4,7 +4,7 @@
         Style="{StaticResource PlainWindow}"
         Title="PlainToolkit.UI Gallery" Width="900" Height="700"
         Background="{DynamicResource ColorBrushBackground}"
-        FontFamily="{DynamicResource LaunchFontFamily}">
+        FontFamily="Segoe UI">
     <ScrollViewer Style="{DynamicResource PlainScrollViewerFullMargin}" Padding="20">
         <StackPanel>
             <!-- Header -->
@@ -203,6 +203,67 @@
                        Foreground="{DynamicResource ColorBrush1}" Margin="0,0,0,8" />
 
             <Calendar Width="260" Height="200" Margin="0,0,0,24" />
+
+            <!-- ============================================ -->
+            <!-- 13. ListBox -->
+            <!-- ============================================ -->
+            <TextBlock Text="ListBox" FontSize="18" FontWeight="SemiBold"
+                       Foreground="{DynamicResource ColorBrush1}" Margin="0,0,0,8" />
+
+            <ListBox Width="300" HorizontalAlignment="Left" Margin="0,0,0,24">
+                <ListBoxItem Content="Item 1" />
+                <ListBoxItem Content="Item 2" />
+                <ListBoxItem Content="Item 3 (selected)" IsSelected="True" />
+                <ListBoxItem Content="Item 4" />
+            </ListBox>
+
+            <!-- ============================================ -->
+            <!-- 14. ListView (GridView) -->
+            <!-- ============================================ -->
+            <TextBlock Text="ListView (GridView)" FontSize="18" FontWeight="SemiBold"
+                       Foreground="{DynamicResource ColorBrush1}" Margin="0,0,0,8" />
+
+            <ListView Width="400" HorizontalAlignment="Left" Margin="0,0,0,24"
+                      ItemsSource="{Binding SampleData}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Category" Width="100" DisplayMemberBinding="{Binding Category}" />
+                        <GridViewColumn Header="Value" Width="80" DisplayMemberBinding="{Binding Value}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!-- ============================================ -->
+            <!-- 15. DataGrid -->
+            <!-- ============================================ -->
+            <TextBlock Text="DataGrid" FontSize="18" FontWeight="SemiBold"
+                       Foreground="{DynamicResource ColorBrush1}" Margin="0,0,0,8" />
+
+            <DataGrid Width="500" HorizontalAlignment="Left" Height="160" Margin="0,0,0,24"
+                      ItemsSource="{Binding SampleData}"
+                      AutoGenerateColumns="True" />
+
+            <!-- ============================================ -->
+            <!-- 16. TabControl -->
+            <!-- ============================================ -->
+            <TextBlock Text="TabControl" FontSize="18" FontWeight="SemiBold"
+                       Foreground="{DynamicResource ColorBrush1}" Margin="0,0,0,8" />
+
+            <TabControl Width="400" HorizontalAlignment="Left" Margin="0,0,0,24" Height="120">
+                <TabItem Header="First Tab">
+                    <TextBlock Text="Content of first tab" FontSize="13" Margin="8"
+                               Foreground="{DynamicResource ColorBrush1}" />
+                </TabItem>
+                <TabItem Header="Second Tab">
+                    <TextBlock Text="Content of second tab" FontSize="13" Margin="8"
+                               Foreground="{DynamicResource ColorBrush1}" />
+                </TabItem>
+                <TabItem Header="Third Tab">
+                    <TextBlock Text="Content of third tab" FontSize="13" Margin="8"
+                               Foreground="{DynamicResource ColorBrush1}" />
+                </TabItem>
+            </TabControl>
 
             <!-- footer spacer -->
             <Rectangle Height="20" Fill="Transparent" />

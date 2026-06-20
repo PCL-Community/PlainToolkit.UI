@@ -6,9 +6,6 @@
     <sys:Double x:Key="BlurRadius">0.0</sys:Double>
     <sys:Double x:Key="BlurSamplingRate">0.7</sys:Double>
 
-    <!-- Font -->
-    <FontFamily x:Key="LaunchFontFamily">Microsoft YaHei UI, Segoe UI, Microsoft Sans Serif</FontFamily>
-
     <!-- Color Brushes -->
     <SolidColorBrush x:Key="ColorBrush1">#343d4a</SolidColorBrush>
     <SolidColorBrush x:Key="ColorBrush2">#0b5bcb</SolidColorBrush>

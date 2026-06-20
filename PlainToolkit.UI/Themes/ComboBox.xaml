@@ -10,7 +10,7 @@
         <Setter Property="Background" Value="{DynamicResource ColorBrushHalfWhite}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="FontFamily" Value="{DynamicResource LaunchFontFamily}" />
+
         <Setter Property="MaxDropDownHeight" Value="160" />
         <Setter Property="Template">
             <Setter.Value>
@@ -177,7 +177,7 @@
         <Setter Property="Background" Value="{DynamicResource ColorBrushTransparent}" />
         <Setter Property="Foreground" Value="{DynamicResource ColorBrush1}" />
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="FontFamily" Value="{DynamicResource LaunchFontFamily}" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBoxItem">

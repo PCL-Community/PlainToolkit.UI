@@ -1,91 +1,74 @@
 using System.Windows;
-using System.Windows.Threading;
 
 namespace PlainToolkit.UI;
 
 /// <summary>
-/// Detects Windows dark mode and swaps theme ResourceDictionaries at runtime.
-/// Not a custom control — utility only.
+/// Reorders palette ResourceDictionaries at runtime.
+/// Both Colors.xaml and ColorsDark.xaml are always loaded in Generic.xaml.
+/// Light mode = ColorsDark.xaml before Colors.xaml (Colors.xaml wins).
+/// Dark  mode = ColorsDark.xaml after  Colors.xaml (ColorsDark.xaml wins).
 /// </summary>
 public static class ThemeHelper
 {
-    private const string RegistryPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
-    private const string RegistryValue = "AppsUseLightTheme";
-
-    private static ResourceDictionary? _darkColors;
-    private static ResourceDictionary? _targetRoot;
-    private static DispatcherTimer? _timer;
+    private static ResourceDictionary? _genericDict;
+    private static ResourceDictionary? _colorsLight;
+    private static ResourceDictionary? _colorsDark;
 
     /// <summary>
-    /// Initialize automatic dark mode detection.
-    /// Call once at app startup, passing the Generic.xaml ResourceDictionary.
+    /// Initialize theme support. Must be called once at app startup.
     /// </summary>
-    public static void Initialize(ResourceDictionary genericRoot)
+    public static void Initialize(ResourceDictionary appResources)
     {
-        _targetRoot = genericRoot;
-
-        // Locate ColorsDark.xaml in merged dictionaries, or create placeholder
-        foreach (var dict in genericRoot.MergedDictionaries)
+        // Find Generic.xaml inside Application.Resources.MergedDictionaries
+        foreach (var dict in appResources.MergedDictionaries)
         {
             var src = dict.Source?.OriginalString ?? "";
-            if (src.EndsWith("/ColorsDark.xaml") || src.EndsWith("/ColorsDark.xaml"))
+            if (src.Contains("/Generic.xaml"))
             {
-                _darkColors = dict;
+                _genericDict = dict;
                 break;
             }
         }
 
-        if (_darkColors == null)
+        // Find Colors.xaml and ColorsDark.xaml inside Generic.xaml's MergedDictionaries
+        foreach (var dict in _genericDict?.MergedDictionaries ?? [])
         {
-            var uri = new Uri("pack://application:,,,/PlainToolkit.UI;component/Themes/ColorsDark.xaml", UriKind.Absolute);
-            _darkColors = new ResourceDictionary { Source = uri };
+            var src = dict.Source?.OriginalString ?? "";
+            if (src.Contains("/Colors.xaml") && !src.Contains("Dark"))
+                _colorsLight = dict;
+            if (src.Contains("/ColorsDark.xaml"))
+                _colorsDark = dict;
         }
-
-        // Apply current OS theme
-        ApplyThemeFromOS();
-
-        // Poll registry every 5s for theme changes
-        _timer = new DispatcherTimer(TimeSpan.FromSeconds(5), DispatcherPriority.Background,
-            (_, _) => ApplyThemeFromOS(), Dispatcher.CurrentDispatcher);
-        _timer.Start();
     }
 
     /// <summary>
-    /// Manually set light (true) or dark (false) mode.
+    /// Set light (true) or dark (false) mode.
     /// </summary>
     public static void SetTheme(bool isLight)
     {
-        if (_targetRoot == null || _darkColors == null) return;
+        if (_genericDict == null || _colorsLight == null || _colorsDark == null) return;
+
+        var dicts = _genericDict.MergedDictionaries;
 
         if (isLight)
         {
-            // Remove dark override so Colors.xaml wins
-            if (_targetRoot.MergedDictionaries.Contains(_darkColors))
-                _targetRoot.MergedDictionaries.Remove(_darkColors);
+            // ColorsDark.xaml before Colors.xaml → Colors.xaml wins
+            if (dicts.IndexOf(_colorsDark) > dicts.IndexOf(_colorsLight))
+            {
+                dicts.Remove(_colorsDark);
+                var lightIdx = dicts.IndexOf(_colorsLight);
+                dicts.Insert(lightIdx, _colorsDark);
+            }
         }
         else
         {
-            // Insert dark override after the first few (Colors.xaml) so it overrides
-            if (!_targetRoot.MergedDictionaries.Contains(_darkColors))
+            // ColorsDark.xaml after Colors.xaml → ColorsDark.xaml wins
+            if (dicts.IndexOf(_colorsDark) < dicts.IndexOf(_colorsLight))
             {
-                // Insert after position 0 (Colors.xaml) so dark wins
-                _targetRoot.MergedDictionaries.Insert(1, _darkColors);
+                dicts.Remove(_colorsDark);
+                var lightIdx = dicts.IndexOf(_colorsLight);
+                dicts.Insert(lightIdx + 1, _colorsDark);
             }
-        }
-    }
-
-    private static void ApplyThemeFromOS()
-    {
-        try
-        {
-            using var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(RegistryPath);
-            var val = key?.GetValue(RegistryValue);
-            var isLight = val is int i && i != 0;
-            SetTheme(isLight);
-        }
-        catch
-        {
-            SetTheme(true);
         }
     }
 }

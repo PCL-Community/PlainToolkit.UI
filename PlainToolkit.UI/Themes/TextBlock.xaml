@@ -7,7 +7,7 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="{DynamicResource ColorBrush1}" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-        <Setter Property="FontFamily" Value="{DynamicResource LaunchFontFamily}" />
+
     </Style>
     <Style TargetType="TextBlock" BasedOn="{StaticResource PlainTextBlock}" />
 

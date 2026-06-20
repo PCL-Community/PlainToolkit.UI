@@ -7,7 +7,7 @@
         <Setter Property="SnapsToDevicePixels" Value="False" />
         <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="FontFamily" Value="{DynamicResource LaunchFontFamily}" />
+
         <Setter Property="BorderBrush" Value="{DynamicResource ColorBrush1}" />
         <Setter Property="Background" Value="{DynamicResource ColorBrushHalfWhite}" />
         <Setter Property="Padding" Value="14,8" />

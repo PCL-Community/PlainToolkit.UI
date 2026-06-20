@@ -19,6 +19,14 @@
         <ResourceDictionary Source="ToggleButton.xaml" />
         <ResourceDictionary Source="MenuItem.xaml" />
         <ResourceDictionary Source="Calendar.xaml" />
+        <ResourceDictionary Source="ListBox.xaml" />
+        <ResourceDictionary Source="ListView.xaml" />
+        <ResourceDictionary Source="DataGrid.xaml" />
+        <ResourceDictionary Source="TabControl.xaml" />
+        <!-- ColorsDark.xaml is always loaded but reordered at runtime for light/dark. -->
+        <!-- In light mode it sits before Colors.xaml (Colors.xaml wins).              -->
+        <!-- In dark  mode it sits after  Colors.xaml (ColorsDark.xaml wins).          -->
+        <ResourceDictionary Source="ColorsDark.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

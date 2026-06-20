@@ -6,7 +6,9 @@ public partial class App
 {
     protected override void OnStartup(StartupEventArgs e)
     {
-        // Auto-detect Windows dark/light mode
+        // Theme must be set before window creation to avoid flash
         ThemeHelper.Initialize(Resources);
+        // Default to light mode; call ThemeHelper.SetTheme(false) for dark
+        base.OnStartup(e);
     }
 }

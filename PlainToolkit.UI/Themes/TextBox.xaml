@@ -8,7 +8,7 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="SelectionBrush" Value="{DynamicResource ColorBrush3}" />
         <Setter Property="Foreground" Value="{DynamicResource ColorBrush1}" />
-        <Setter Property="FontFamily" Value="{DynamicResource LaunchFontFamily}" />
+
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
