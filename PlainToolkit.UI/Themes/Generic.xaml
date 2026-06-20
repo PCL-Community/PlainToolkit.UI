@@ -3,26 +3,27 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Colors.xaml" />
-        <ResourceDictionary Source="Window.xaml" />
-        <ResourceDictionary Source="Label.xaml" />
-        <ResourceDictionary Source="TextBlock.xaml" />
-        <ResourceDictionary Source="ToolTip.xaml" />
-        <ResourceDictionary Source="Button.xaml" />
-        <ResourceDictionary Source="CheckBox.xaml" />
-        <ResourceDictionary Source="RadioButton.xaml" />
-        <ResourceDictionary Source="TextBox.xaml" />
-        <ResourceDictionary Source="ComboBox.xaml" />
-        <ResourceDictionary Source="ScrollBar.xaml" />
-        <ResourceDictionary Source="ScrollViewer.xaml" />
-        <ResourceDictionary Source="Slider.xaml" />
-        <ResourceDictionary Source="ContextMenu.xaml" />
-        <ResourceDictionary Source="ToggleButton.xaml" />
-        <ResourceDictionary Source="MenuItem.xaml" />
-        <ResourceDictionary Source="Calendar.xaml" />
-        <ResourceDictionary Source="ListBox.xaml" />
-        <ResourceDictionary Source="ListView.xaml" />
-        <ResourceDictionary Source="DataGrid.xaml" />
-        <ResourceDictionary Source="TabControl.xaml" />
+        <ResourceDictionary Source="Controls/Window.xaml" />
+        <ResourceDictionary Source="Controls/Label.xaml" />
+        <ResourceDictionary Source="Controls/TextBlock.xaml" />
+        <ResourceDictionary Source="Controls/ToolTip.xaml" />
+        <ResourceDictionary Source="Controls/Button.xaml" />
+        <ResourceDictionary Source="Controls/CheckBox.xaml" />
+        <ResourceDictionary Source="Controls/RadioButton.xaml" />
+        <ResourceDictionary Source="Controls/TextBox.xaml" />
+        <ResourceDictionary Source="Controls/ComboBox.xaml" />
+        <ResourceDictionary Source="Controls/ScrollBar.xaml" />
+        <ResourceDictionary Source="Controls/ScrollViewer.xaml" />
+        <ResourceDictionary Source="Controls/Slider.xaml" />
+        <ResourceDictionary Source="Controls/ContextMenu.xaml" />
+        <ResourceDictionary Source="Controls/ToggleButton.xaml" />
+        <ResourceDictionary Source="Controls/MenuItem.xaml" />
+        <ResourceDictionary Source="Controls/Calendar.xaml" />
+        <ResourceDictionary Source="Controls/ListBox.xaml" />
+        <ResourceDictionary Source="Controls/ListView.xaml" />
+        <ResourceDictionary Source="Controls/DataGrid.xaml" />
+        <ResourceDictionary Source="Controls/TabControl.xaml" />
+        <ResourceDictionary Source="Controls/Card.xaml" />
         <!-- ColorsDark.xaml is always loaded but reordered at runtime for light/dark. -->
         <!-- In light mode it sits before Colors.xaml (Colors.xaml wins).              -->
         <!-- In dark  mode it sits after  Colors.xaml (ColorsDark.xaml wins).          -->
