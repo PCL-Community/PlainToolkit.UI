@@ -93,7 +93,6 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource ColorBrush2}" />
                             <Setter TargetName="Underline" Property="Opacity" Value="1" />
-                            <Setter TargetName="SeparatorLine" Property="Opacity" Value="0" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource ColorBrushGray5}" />
