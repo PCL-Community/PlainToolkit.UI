@@ -20,9 +20,9 @@
 
 ## Features
 
-- **17+ styled controls** — Button, CheckBox, RadioButton, Slider, ComboBox, TextBox, PasswordBox, ScrollBar, ContextMenu, ToolTip, and more.
+- **21 styled controls** — Button, CheckBox, RadioButton, Slider, ComboBox, TextBox, PasswordBox, ScrollBar, ContextMenu, ToolTip, ListBox, ListView, DataGrid, TabControl, and more.
 - **Color-theme aware** — All hover/focus/checked states use `DynamicResource` setters (no hardcoded `ColorAnimation`). Theme switches at runtime without flashes.
-- **Dark mode built-in** — `ThemeHelper` detects Windows system dark mode (registry poll) and swaps color palettes live.
+- **Dark mode built-in** — Call `ThemeHelper.SetTheme(false)` for dark, `SetTheme(true)` for light. PCL-CE SkyBlue OKLCH-based palette, consumer decides.
 - **PCL-CE visual fidelity** — Templates match the original PCL2 layout exactly: border outlines, elastic-ease animations, scale-on-press feedback.
 - **Zero custom controls** — Pure XAML styles + one utility class (`ThemeHelper.cs`). No custom WPF controls to maintain.
 
@@ -68,6 +68,8 @@ public partial class App : Application
     {
         base.OnStartup(e);
         ThemeHelper.Initialize(Resources);
+        // true = light, false = dark — consumer decides
+        ThemeHelper.SetTheme(false);
     }
 }
 ```
@@ -105,6 +107,10 @@ All standard WPF controls automatically pick up the implicit styles — no speci
 | Calendar      | `Calendar.xaml`    | Theme-consistent day cells |
 | ScrollViewer  | `ScrollViewer.xaml`| Flush scroll styling |
 | Window        | `Window.xaml`      | Default window chrome |
+| ListBox       | `ListBox.xaml`     | ListBox + ListBoxItem templates |
+| ListView      | `ListView.xaml`    | ListView + ListViewItem + GridViewColumnHeader |
+| DataGrid      | `DataGrid.xaml`    | DataGrid + column header + row + cell |
+| TabControl    | `TabControl.xaml`  | Underline indicator, separator between tabs |
 
 ## Theming
 
@@ -112,13 +118,14 @@ All standard WPF controls automatically pick up the implicit styles — no speci
 
 All colors are defined as `SolidColorBrush` resources in `Colors.xaml` (light) and `ColorsDark.xaml` (dark):
 
-| Resource                     | Light     | Dark (approx) |
-|------------------------------|-----------|---------------|
-| `ColorBrush1` (text)         | `#343d4a` | `#EAEAEA`     |
-| `ColorBrush2` (accent)       | `#0b5bcb` | `#7BA8F0`     |
-| `ColorBrushBg0` (accent bg)  | `#96c0f9` | `#4A6A9E`     |
-| `ColorBrushBackground`       | `#fbfbfb` | `#404040`     |
-| `ColorBrushWhite`            | `#ffffff` | `#323232`     |
+| Resource                     | Light     | Dark (SkyBlue) |
+|------------------------------|-----------|----------------|
+| `ColorBrush1` (text)         | `#343d4a` | `#dce4f0`      |
+| `ColorBrush2` (accent)       | `#0b5bcb` | `#6ba3f5`      |
+| `ColorBrush3` (primary)      | `#1370f3` | `#3d82e8`      |
+| `ColorBrushBg0` (accent bg)  | `#96c0f9` | `#3e5070`      |
+| `ColorBrushBackground`       | `#fbfbfb` | `#202834`      |
+| `ColorBrushWhite`            | `#ffffff` | `#252d3c`      |
 | `ColorBrushGray1`–`Gray8`    | Light grays | Dark grays (inverted) |
 
 ### State-specific resources
@@ -144,7 +151,7 @@ Override any resource in your app-level dictionary _after_ merging Generic.xaml:
 ```
 PlainToolkit.UI/
 ├── PlainToolkit.UI.csproj
-├── ThemeHelper.cs                     # Dark mode detection + palette swap
+├── ThemeHelper.cs                     # Palette reorder (light/dark)
 ├── Themes/
 │   ├── Generic.xaml                   # MergedDictionaries hub
 │   ├── Colors.xaml                    # Light palette
@@ -153,7 +160,7 @@ PlainToolkit.UI/
 │   ├── CheckBox.xaml
 │   ├── RadioButton.xaml
 │   ├── Slider.xaml
-│   └── ... (17 files)
+│   └── ... (21 files)
 └── PlainToolkit.UI.Gallery/
     ├── App.xaml / App.xaml.cs          # ThemeHelper init demo
     └── MainWindow.xaml / .cs           # Interactive control gallery
@@ -161,13 +168,14 @@ PlainToolkit.UI/
 
 ## Dark Mode
 
-`ThemeHelper` reads the Windows registry key `HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize\AppsUseLightTheme` and polls every 5 seconds. On change it swaps `ColorsDark.xaml` into the merged dictionaries.
-
-To disable auto-detection:
+`ThemeHelper` reorders `Colors.xaml` and `ColorsDark.xaml` within `Generic.xaml`'s MergedDictionaries. Both palettes are always loaded; the last one wins per key. `DynamicResource` re-evaluates on reorder — no flash, no restart.
 
 ```csharp
-ThemeHelper.Initialize(Resources, enableAutoDetection: false);
+ThemeHelper.Initialize(Resources);  // call once at startup
+ThemeHelper.SetTheme(false);         // false = dark, true = light
 ```
+
+The dark palette uses PCL-CE SkyBlue OKLCH approximation (hue≈235°, inverted lightness per `ToneProfileConfig.DefaultDark`).
 
 ## Contributing
 
