@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="PlainToolkit.UI\PlainToolkit.UI.csproj" />
+  <Project Path="PlainToolkit.UI.Gallery\PlainToolkit.UI.Gallery.csproj" />
+</Solution>

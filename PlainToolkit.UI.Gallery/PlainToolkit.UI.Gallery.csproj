@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>PlainToolkit.UI.Gallery</RootNamespace>
+    <AssemblyName>PlainToolkit.UI.Gallery</AssemblyName>
+    <Description>PlainToolkit.UI Control Gallery</Description>
+    <LangVersion>12</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PlainToolkit.UI\PlainToolkit.UI.csproj" />
+  </ItemGroup>
+</Project>
