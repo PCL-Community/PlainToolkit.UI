@@ -20,10 +20,11 @@
 
 ## Features
 
-- **21 styled controls** — Button, CheckBox, RadioButton, Slider, ComboBox, TextBox, PasswordBox, ScrollBar, ContextMenu, ToolTip, ListBox, ListView, DataGrid, TabControl, and more.
-- **Color-theme aware** — All hover/focus/checked states use `DynamicResource` setters (no hardcoded `ColorAnimation`). Theme switches at runtime without flashes.
+- **21 styled controls** — Button, CheckBox, RadioButton, Slider, ComboBox, TextBox, PasswordBox, ScrollBar, ContextMenu, ToolTip, ListBox, ListView, DataGrid, TabControl, Card, ToggleButton, and more.
+- **Smooth state animations** — All hover/focus/checked color changes use fast opacity transitions (0.1s) instead of instant snapping.
+- **Color-theme aware** — All state colors use `DynamicResource`. Theme switches at runtime without flashes. No `ColorAnimation` anywhere.
 - **Dark mode built-in** — Call `ThemeHelper.SetTheme(false)` for dark, `SetTheme(true)` for light. PCL-CE SkyBlue OKLCH-based palette, consumer decides.
-- **PCL-CE visual fidelity** — Templates match the original PCL2 layout exactly: border outlines, elastic-ease animations, scale-on-press feedback.
+- **PCL-CE visual fidelity** — Templates match the original PCL2 layout: border outlines, elastic-ease animations, scale-on-press feedback, animated card shadows.
 - **Zero custom controls** — Pure XAML styles + one utility class (`ThemeHelper.cs`). No custom WPF controls to maintain.
 
 ## Installation
@@ -90,27 +91,27 @@ All standard WPF controls automatically pick up the implicit styles — no speci
 
 | Control       | File               | Highlights |
 |---------------|---------------------|------------|
-| Button        | `Button.xaml`      | Scale-on-press, variant color via `BorderBrush` |
+| Button        | `Button.xaml`      | Scale-on-press, variant color via `BorderBrush`, smooth hover fade |
 | CheckBox      | `CheckBox.xaml`    | ElasticEase damping animation, indeterminate state |
 | RadioButton   | `RadioButton.xaml` | ScaleTransform dot animation (0→1), left-aligned |
 | Slider        | `Slider.xaml`      | WPF Track/Thumb, 14px thumb, thin 4px progress bar |
-| TextBox       | `TextBox.xaml`     | CaretBrush/SelectionBrush for dark mode |
+| TextBox       | `TextBox.xaml`     | CaretBrush/SelectionBrush for dark mode, animated focus |
 | PasswordBox   | `TextBox.xaml`     | Same template as TextBox |
-| ComboBox      | `ComboBox.xaml`    | Dropdown chevron rotation animation |
-| ScrollBar     | `ScrollBar.xaml`   | Thin track, theme-aware thumb |
+| ComboBox      | `ComboBox.xaml`    | Dropdown chevron rotation, animated focus |
+| ScrollBar     | `ScrollBar.xaml`   | Thin track, theme-aware thumb, hover fade-in |
 | ContextMenu   | `ContextMenu.xaml` | Implicit style with Separator styling |
 | MenuItem      | `MenuItem.xaml`    | Implicit style for menu children |
 | ToolTip       | `ToolTip.xaml`     | Rounded border via ControlTemplate override |
 | Label         | `Label.xaml`       | Foreground + font matching |
 | TextBlock     | `TextBlock.xaml`   | Default font/foreground |
-| ToggleButton  | `ToggleButton.xaml`| Checked state styling |
-| Calendar      | `Calendar.xaml`    | Theme-consistent day cells |
+| ToggleButton  | `ToggleButton.xaml`| Visible border, centered chevron, rotate animation, checked state |
 | ScrollViewer  | `ScrollViewer.xaml`| Flush scroll styling |
 | Window        | `Window.xaml`      | Default window chrome |
-| ListBox       | `ListBox.xaml`     | ListBox + ListBoxItem templates |
+| ListBox       | `ListBox.xaml`     | ListBox + ListBoxItem + accent selection bar |
 | ListView      | `ListView.xaml`    | ListView + ListViewItem + GridViewColumnHeader |
 | DataGrid      | `DataGrid.xaml`    | DataGrid + column header + row + cell |
 | TabControl    | `TabControl.xaml`  | Underline indicator, separator between tabs |
+| Card          | `Card.xaml`        | PCL-CE MaterialCard: frosted background, animated shadow + border on hover |
 
 ## Theming
 
@@ -156,11 +157,11 @@ PlainToolkit.UI/
 │   ├── Generic.xaml                   # MergedDictionaries hub
 │   ├── Colors.xaml                    # Light palette
 │   ├── ColorsDark.xaml                # Dark palette
-│   ├── Button.xaml                    # Per-component styles
-│   ├── CheckBox.xaml
-│   ├── RadioButton.xaml
-│   ├── Slider.xaml
-│   └── ... (21 files)
+│   └── Controls/
+│       ├── Button.xaml                # Per-component styles
+│       ├── Card.xaml
+│       ├── CheckBox.xaml
+│       └── ... (21 files)
 └── PlainToolkit.UI.Gallery/
     ├── App.xaml / App.xaml.cs          # ThemeHelper init demo
     └── MainWindow.xaml / .cs           # Interactive control gallery
@@ -180,14 +181,15 @@ The dark palette uses PCL-CE SkyBlue OKLCH approximation (hue≈235°, inverted 
 ## Contributing
 
 1. Fork the repo.
-2. Add or modify a `.xaml` file under `Themes/`.
+2. Add or modify a `.xaml` file under `Themes/Controls/`.
 3. Verify in the Gallery project (`F5`).
 4. Open a pull request.
 
 **Guidelines:**
-- Keep animations color-independent (scale/rotate only — use `DoubleAnimation`, never `ColorAnimation`).
+- Use overlay `Border` + `Opacity` animation for state transitions (never `ColorAnimation`).
 - Use `{DynamicResource}` for all brush references, never `{StaticResource}` across files.
 - Add matching dark resource in `ColorsDark.xaml` for any new color key.
+- Overlays must sit **behind** content in z-order (`IsHitTestVisible="False"`).
 
 ## Thanks
 
