@@ -4,7 +4,7 @@
     <!-- TEXTBOX — PCL-CE MyTextBox style, border animates on hover/focus -->
     <Style TargetType="TextBox" x:Key="PlainTextBox">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource ColorBrushHalfWhite}" />
+        <Setter Property="Background" Value="{DynamicResource ColorBrushTransparent}" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="SelectionBrush" Value="{DynamicResource ColorBrush3}" />
         <Setter Property="Foreground" Value="{DynamicResource ColorBrush1}" />
@@ -96,7 +96,7 @@
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="SelectionBrush" Value="{DynamicResource ColorBrush3}" />
         <Setter Property="Foreground" Value="{DynamicResource ColorBrush1}" />
-        <Setter Property="Background" Value="{DynamicResource ColorBrushHalfWhite}" />
+        <Setter Property="Background" Value="{DynamicResource ColorBrushTransparent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ColorBrushBg0}" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
