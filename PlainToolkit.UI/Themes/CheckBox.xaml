@@ -53,16 +53,16 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="ShapeCheck"
                                             Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleX)"
-                                            To="1" Duration="0:0:0.25">
+                                            To="1" Duration="0:0:0.35">
                                             <DoubleAnimation.EasingFunction>
-                                                <ElasticEase EasingMode="EaseOut" Oscillations="3" Springiness="6" />
+                                                <ElasticEase EasingMode="EaseOut" Oscillations="2" Springiness="3" />
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="ShapeCheck"
                                             Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleY)"
-                                            To="1" Duration="0:0:0.25">
+                                            To="1" Duration="0:0:0.35">
                                             <DoubleAnimation.EasingFunction>
-                                                <ElasticEase EasingMode="EaseOut" Oscillations="3" Springiness="6" />
+                                                <ElasticEase EasingMode="EaseOut" Oscillations="2" Springiness="3" />
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
@@ -87,16 +87,16 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="ShapeIndeterminate"
                                             Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)"
-                                            To="1" Duration="0:0:0.25">
+                                            To="1" Duration="0:0:0.35">
                                             <DoubleAnimation.EasingFunction>
-                                                <ElasticEase EasingMode="EaseOut" Oscillations="3" Springiness="6" />
+                                                <ElasticEase EasingMode="EaseOut" Oscillations="2" Springiness="3" />
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="ShapeIndeterminate"
                                             Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)"
-                                            To="1" Duration="0:0:0.25">
+                                            To="1" Duration="0:0:0.35">
                                             <DoubleAnimation.EasingFunction>
-                                                <ElasticEase EasingMode="EaseOut" Oscillations="3" Springiness="6" />
+                                                <ElasticEase EasingMode="EaseOut" Oscillations="2" Springiness="3" />
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
