@@ -21,6 +21,7 @@
     </Style>
 
     <Style TargetType="ScrollBar" x:Key="PlainScrollBar">
+        <Setter Property="Foreground" Value="{DynamicResource ColorBrushGray4}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
@@ -74,5 +75,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="ScrollBar" BasedOn="{StaticResource PlainScrollBar}" />
 
 </ResourceDictionary>

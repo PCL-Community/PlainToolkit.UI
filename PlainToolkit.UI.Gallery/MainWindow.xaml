@@ -140,10 +140,10 @@
                     <StackPanel>
                         <TextBlock Text="Slider" FontSize="16" FontWeight="SemiBold"
                                    Foreground="{DynamicResource ColorBrush1}" Margin="0,0,0,8" />
-                        <Slider Minimum="0" Maximum="100" Value="42"
-                                Foreground="{DynamicResource ColorBrush3}" Margin="0,0,0,8" />
-                        <Slider Minimum="0" Maximum="100" Value="70" IsEnabled="False"
-                                Foreground="{DynamicResource ColorBrush3}" />
+                        <Slider Width="280" Minimum="0" Maximum="100" Value="42"
+                                Foreground="{DynamicResource ColorBrush2}" Margin="0,0,0,8" />
+                        <Slider Width="280" Minimum="0" Maximum="100" Value="70" IsEnabled="False"
+                                Foreground="{DynamicResource ColorBrush2}" />
                     </StackPanel>
                 </ContentControl>
 
@@ -178,15 +178,6 @@
                                 </ContextMenu>
                             </TextBlock.ContextMenu>
                         </TextBlock>
-                    </StackPanel>
-                </ContentControl>
-
-                <!-- Calendar -->
-                <ContentControl Style="{StaticResource PlainCard}" Width="360" Margin="0,0,12,12">
-                    <StackPanel>
-                        <TextBlock Text="Calendar" FontSize="16" FontWeight="SemiBold"
-                                   Foreground="{DynamicResource ColorBrush1}" Margin="0,0,0,8" />
-                        <Calendar Width="240" Height="180" />
                     </StackPanel>
                 </ContentControl>
 

@@ -95,43 +95,38 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridColumnHeader">
-                    <Grid>
-                        <Border x:Name="HeaderBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Padding="{TemplateBinding Padding}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <ContentPresenter Grid.Column="0"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="Center"
-                                                  RecognizesAccessKey="True" />
-                                <Path Grid.Column="1" x:Name="SortArrow"
-                                      Width="8" Height="6"
-                                      Fill="{DynamicResource ColorBrushGray3}"
-                                      Stretch="Uniform"
-                                      Margin="4,0,0,0"
-                                      HorizontalAlignment="Center"
-                                      VerticalAlignment="Center"
-                                      RenderTransformOrigin="0.5,0.5"
-                                      Data="M0,0 L4,6 L8,0 Z"
-                                      Visibility="Collapsed" />
-                            </Grid>
-                        </Border>
-                        <Border x:Name="HeaderHoverBorder"
-                                Background="{DynamicResource ColorBrush7}"
-                                Opacity="0" />
-                    </Grid>
+                    <Border x:Name="HeaderBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter Grid.Column="0"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True" />
+                            <Path Grid.Column="1" x:Name="SortArrow"
+                                  Width="8" Height="6"
+                                  Fill="{DynamicResource ColorBrushGray3}"
+                                  Stretch="Uniform"
+                                  Margin="4,0,0,0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  RenderTransformOrigin="0.5,0.5"
+                                  Data="M0,0 L4,6 L8,0 Z"
+                                  Visibility="Collapsed" />
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="HeaderHoverBorder" Property="Opacity" Value="1" />
+                            <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource ColorBrush7}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="HeaderHoverBorder" Property="Background" Value="{DynamicResource ColorBrush6}" />
+                            <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource ColorBrush6}" />
                         </Trigger>
                         <Trigger Property="SortDirection" Value="Ascending">
                             <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
