@@ -251,9 +251,10 @@
                 <StackPanel>
                     <TextBlock Text="Card" FontSize="16" FontWeight="SemiBold"
                                Foreground="{DynamicResource ColorBrush1}" Margin="0,0,0,4" />
-                    <TextBlock Text="A PCL-CE style container with border, rounded corners, and shadow."
-                               FontSize="13" Foreground="{DynamicResource ColorBrushGray2}" Margin="0,0,0,8" />
-                    <TextBlock Text="You are currently looking at a Card. Use PlainCard style on ContentControl."
+                    <TextBlock Text="PCL-CE MaterialCard with animated hover — border, shadow, and tint fade in smoothly."
+                               FontSize="13" Foreground="{DynamicResource ColorBrushGray2}" Margin="0,0,0,8"
+                               TextWrapping="Wrap" />
+                    <TextBlock Text="Use PlainCard style on ContentControl. Hover to see the animation."
                                FontSize="12" Foreground="{DynamicResource ColorBrushGray3}"
                                TextWrapping="Wrap" />
                 </StackPanel>
