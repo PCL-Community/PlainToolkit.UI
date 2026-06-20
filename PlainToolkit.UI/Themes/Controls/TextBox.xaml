@@ -26,19 +26,59 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="3">
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                          Margin="5,0,0,0" Cursor="IBeam"
-                                          BorderThickness="0" />
+                            <Grid>
+                                <Border x:Name="HoverOverlay"
+                                        Background="{DynamicResource ColorBrushInputHoverBg}"
+                                        BorderBrush="{DynamicResource ColorBrushInputHoverBorder}"
+                                        BorderThickness="1" CornerRadius="3"
+                                        Opacity="0" IsHitTestVisible="False" />
+                                <Border x:Name="FocusOverlay"
+                                        Background="{DynamicResource ColorBrushInputFocusBg}"
+                                        BorderBrush="{DynamicResource ColorBrushInputFocusBorder}"
+                                        BorderThickness="1" CornerRadius="3"
+                                        Opacity="0" IsHitTestVisible="False" />
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              Margin="5,0,0,0" Cursor="IBeam"
+                                              BorderThickness="0" />
+                            </Grid>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ColorBrushInputHoverBorder}" />
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ColorBrushInputHoverBg}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverOverlay"
+                                            Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverOverlay"
+                                            Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.12" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ColorBrushInputFocusBorder}" />
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ColorBrushInputFocusBg}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FocusOverlay"
+                                            Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FocusOverlay"
+                                            Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.12" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ColorBrushGray5}" />
@@ -69,19 +109,59 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{TemplateBinding Background}"
                             CornerRadius="3" SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="PART_ContentHost"
-                                      Margin="4.5,4.5,0,4.5"
-                                      HorizontalScrollBarVisibility="Hidden"
-                                      RenderOptions.ClearTypeHint="Enabled" />
+                        <Grid>
+                            <Border x:Name="HoverOverlay"
+                                    Background="{DynamicResource ColorBrushInputHoverBg}"
+                                    BorderBrush="{DynamicResource ColorBrushInputHoverBorder}"
+                                    BorderThickness="1" CornerRadius="3"
+                                    Opacity="0" IsHitTestVisible="False" />
+                            <Border x:Name="FocusOverlay"
+                                    Background="{DynamicResource ColorBrushInputFocusBg}"
+                                    BorderBrush="{DynamicResource ColorBrushInputFocusBorder}"
+                                    BorderThickness="1" CornerRadius="3"
+                                    Opacity="0" IsHitTestVisible="False" />
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="4.5,4.5,0,4.5"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          RenderOptions.ClearTypeHint="Enabled" />
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ColorBrushInputHoverBorder}" />
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ColorBrushInputHoverBg}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverOverlay"
+                                            Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverOverlay"
+                                            Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.12" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ColorBrushInputFocusBorder}" />
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ColorBrushInputFocusBg}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FocusOverlay"
+                                            Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FocusOverlay"
+                                            Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.12" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ColorBrushGray5}" />

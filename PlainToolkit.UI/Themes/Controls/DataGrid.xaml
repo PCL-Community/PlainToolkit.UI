@@ -158,7 +158,10 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="2"
                             SnapsToDevicePixels="True">
-                        <SelectiveScrollingGrid>
+                        <Grid>
+                            <Border x:Name="HoverBg" Background="{DynamicResource ColorBrush8}"
+                                    CornerRadius="2" Opacity="0" IsHitTestVisible="False" />
+                            <SelectiveScrollingGrid>
                             <SelectiveScrollingGrid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
@@ -175,10 +178,26 @@
                             <DataGridRowHeader Grid.Column="0" Grid.RowSpan="2"
                                                Visibility="Collapsed" />
                         </SelectiveScrollingGrid>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ColorBrush8}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBg"
+                                            Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBg"
+                                            Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.12" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ColorBrush7}" />

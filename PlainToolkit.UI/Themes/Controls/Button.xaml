@@ -9,40 +9,58 @@
         <Setter Property="FontSize" Value="13" />
 
         <Setter Property="BorderBrush" Value="{DynamicResource ColorBrush1}" />
-        <Setter Property="Background" Value="{DynamicResource ColorBrushHalfWhite}" />
+        <Setter Property="Background" Value="{DynamicResource ColorBrushTransparent}" />
         <Setter Property="Padding" Value="14,8" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="PanBack"
                             Background="{DynamicResource ColorBrushSemiTransparent}">
-                        <Border x:Name="PanFore" CornerRadius="3" BorderThickness="1"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                Background="{TemplateBinding Background}"
-                                Padding="{TemplateBinding Padding}"
-                                RenderTransformOrigin="0.5,0.5">
-                            <Border.RenderTransform>
-                                <ScaleTransform />
-                            </Border.RenderTransform>
-                            <TextBlock x:Name="LabText"
-                                       Text="{TemplateBinding Content}"
-                                       TextOptions.TextFormattingMode="Display"
-                                       SnapsToDevicePixels="True" TextTrimming="None"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       RenderTransformOrigin="0.5,0.5"
-                                       Foreground="{Binding BorderBrush, ElementName=PanFore}"
-                                       FontSize="{TemplateBinding FontSize}"
-                                       IsHitTestVisible="False">
-                                <TextBlock.RenderTransform>
+                        <Grid>
+                            <Border x:Name="HoverBg" Background="{DynamicResource ColorBrushButtonHoverBg}"
+                                    CornerRadius="3" Opacity="0" IsHitTestVisible="False" />
+                            <Border x:Name="PanFore" CornerRadius="3" BorderThickness="1"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Background="{TemplateBinding Background}"
+                                    Padding="{TemplateBinding Padding}"
+                                    RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform>
                                     <ScaleTransform />
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
-                        </Border>
+                                </Border.RenderTransform>
+                                <TextBlock x:Name="LabText"
+                                           Text="{TemplateBinding Content}"
+                                           TextOptions.TextFormattingMode="Display"
+                                           SnapsToDevicePixels="True" TextTrimming="None"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           RenderTransformOrigin="0.5,0.5"
+                                           Foreground="{Binding BorderBrush, ElementName=PanFore}"
+                                           FontSize="{TemplateBinding FontSize}"
+                                           IsHitTestVisible="False">
+                                    <TextBlock.RenderTransform>
+                                        <ScaleTransform />
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </Border>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <!-- Hover: only background changes; BorderBrush keeps variant color -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PanFore" Property="Background" Value="{DynamicResource ColorBrushButtonHoverBg}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBg"
+                                            Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBg"
+                                            Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.12" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <!-- Pressed: scale animation (color-independent) -->
                         <Trigger Property="IsPressed" Value="True">

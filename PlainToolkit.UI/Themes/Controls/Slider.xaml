@@ -9,7 +9,7 @@
         <Setter Property="MinWidth" Value="40" />
         <Setter Property="SnapsToDevicePixels" Value="False" />
         <Setter Property="UseLayoutRounding" Value="False" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ColorBrushBg0}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ColorBrush3}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Slider">
@@ -26,7 +26,7 @@
                                 Height="4" Margin="6,0"
                                 VerticalAlignment="Center"
                                 CornerRadius="2"
-                                Background="{DynamicResource ColorBrush5}"
+                                Background="{DynamicResource ColorBrush2}"
                                 Opacity="0.4" />
 
                         <!-- Interactive Track (expands to fill row = 14px) -->

@@ -57,7 +57,7 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="barBorder"
-                                            Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.13" />
+                                            Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -65,7 +65,7 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="barBorder"
-                                            Storyboard.TargetProperty="Opacity" To="0.5" Duration="0:0:0.18" />
+                                            Storyboard.TargetProperty="Opacity" To="0.5" Duration="0:0:0.12" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

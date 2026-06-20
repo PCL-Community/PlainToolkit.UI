@@ -3,7 +3,7 @@
 
     <!-- CARD — PCL-CE MaterialCard with animated hover -->
     <Style TargetType="ContentControl" x:Key="PlainCard">
-        <Setter Property="Background" Value="{DynamicResource ColorBrushWhite}" />
+        <Setter Property="Background" Value="{DynamicResource ColorBrushTransparentBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ColorBrushGray7}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="16" />
@@ -43,10 +43,10 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="CardHighlight"
                                             Storyboard.TargetProperty="Opacity"
-                                            To="1" Duration="0:0:0.2" />
+                                            To="1" Duration="0:0:0.1" />
                                         <DoubleAnimation Storyboard.TargetName="CardShadow"
                                             Storyboard.TargetProperty="Opacity"
-                                            To="0.14" Duration="0:0:0.2" />
+                                            To="0.14" Duration="0:0:0.1" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -55,10 +55,10 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="CardHighlight"
                                             Storyboard.TargetProperty="Opacity"
-                                            To="0" Duration="0:0:0.3" />
+                                            To="0" Duration="0:0:0.15" />
                                         <DoubleAnimation Storyboard.TargetName="CardShadow"
                                             Storyboard.TargetProperty="Opacity"
-                                            To="0.06" Duration="0:0:0.3" />
+                                            To="0.06" Duration="0:0:0.15" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
