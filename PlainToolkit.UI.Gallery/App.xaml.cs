@@ -8,7 +8,8 @@ public partial class App
     {
         // Theme must be set before window creation to avoid flash
         ThemeHelper.Initialize(Resources);
-        // Default to light mode; call ThemeHelper.SetTheme(false) for dark
+        // true = light, false = dark
+        ThemeHelper.SetTheme(true);
         base.OnStartup(e);
     }
 }

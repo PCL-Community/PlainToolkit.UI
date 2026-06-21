@@ -15,11 +15,13 @@ public static class ThemeHelper
     private static ResourceDictionary? _colorsDark;
 
     /// <summary>
-    /// Initialize theme support. Must be called once at app startup.
+    /// Initialize theme support. Must be called once at app startup, on the UI thread.
+    /// If Generic.xaml is nested inside another ResourceDictionary, use the overload
+    /// that accepts explicit dictionary references instead.
     /// </summary>
     public static void Initialize(ResourceDictionary appResources)
     {
-        // Find Generic.xaml inside Application.Resources.MergedDictionaries
+        // Find Generic.xaml inside Application.Resources.MergedDictionaries (one level deep)
         foreach (var dict in appResources.MergedDictionaries)
         {
             var src = dict.Source?.OriginalString ?? "";
@@ -30,8 +32,17 @@ public static class ThemeHelper
             }
         }
 
+        if (_genericDict is null)
+        {
+            System.Diagnostics.Debug.WriteLine(
+                "[PlainToolkit.UI] ThemeHelper.Initialize: Generic.xaml not found in top-level " +
+                "MergedDictionaries. If Generic.xaml is nested inside another ResourceDictionary, " +
+                "use Initialize(ResourceDictionary generic, ResourceDictionary light, ResourceDictionary dark) instead.");
+            return;
+        }
+
         // Find Colors.xaml and ColorsDark.xaml inside Generic.xaml's MergedDictionaries
-        foreach (var dict in _genericDict?.MergedDictionaries ?? [])
+        foreach (var dict in _genericDict.MergedDictionaries)
         {
             var src = dict.Source?.OriginalString ?? "";
             if (src.Contains("/Colors.xaml") && !src.Contains("Dark"))
@@ -42,7 +53,21 @@ public static class ThemeHelper
     }
 
     /// <summary>
-    /// Set light (true) or dark (false) mode.
+    /// Initialize theme support with explicit palette references.
+    /// Use this overload when Generic.xaml is nested inside another ResourceDictionary.
+    /// </summary>
+    /// <param name="generic">The Generic.xaml ResourceDictionary (must contain both Colors.xaml and ColorsDark.xaml in its MergedDictionaries).</param>
+    /// <param name="colorsLight">The Colors.xaml ResourceDictionary from generic.MergedDictionaries.</param>
+    /// <param name="colorsDark">The ColorsDark.xaml ResourceDictionary from generic.MergedDictionaries.</param>
+    public static void Initialize(ResourceDictionary generic, ResourceDictionary colorsLight, ResourceDictionary colorsDark)
+    {
+        _genericDict = generic;
+        _colorsLight = colorsLight;
+        _colorsDark = colorsDark;
+    }
+
+    /// <summary>
+    /// Set light (true) or dark (false) mode. Must be called on the UI thread.
     /// </summary>
     public static void SetTheme(bool isLight)
     {

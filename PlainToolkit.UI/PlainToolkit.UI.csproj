@@ -9,7 +9,5 @@
     <Description>PlainToolkit UI Component Library — extracted from PCL-CE</Description>
     <LangVersion>12</LangVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Markdig.Wpf" Version="0.5.0.1" />
-  </ItemGroup>
+
 </Project>
