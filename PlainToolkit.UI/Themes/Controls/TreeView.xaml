@@ -10,7 +10,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="{DynamicResource ColorBrush1}" />
-        <Setter Property="ItemContainerStyle" Value="{StaticResource PlainTreeViewItem}" />
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource PlainTreeViewItem}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TreeView">
