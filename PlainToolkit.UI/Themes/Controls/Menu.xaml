@@ -8,7 +8,7 @@
         <Setter Property="Background" Value="{DynamicResource ColorBrushBackground}" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="{DynamicResource ColorBrush1}" />
-        <Setter Property="ItemContainerStyle" Value="{StaticResource PlainTopLevelMenuItem}" />
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource PlainTopLevelMenuItem}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Menu">
