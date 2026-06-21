@@ -15,33 +15,49 @@
                     <Border x:Name="TrackBorder"
                             Background="{TemplateBinding Background}"
                             CornerRadius="3"
-                            BorderThickness="0">
-                        <Border x:Name="PART_Indicator"
-                                Background="{TemplateBinding Foreground}"
-                                CornerRadius="3"
-                                HorizontalAlignment="Left"
-                                SnapsToDevicePixels="True" />
+                            BorderThickness="0"
+                            ClipToBounds="True">
+                        <Grid>
+                            <!-- Determinate indicator -->
+                            <Border x:Name="PART_Indicator"
+                                    Background="{TemplateBinding Foreground}"
+                                    CornerRadius="3"
+                                    HorizontalAlignment="Left" />
+                            <!-- Indeterminate sliding bar -->
+                            <Border x:Name="IndeterminateBar"
+                                    Background="{TemplateBinding Foreground}"
+                                    CornerRadius="3"
+                                    Width="60"
+                                    HorizontalAlignment="Left"
+                                    Opacity="0"
+                                    RenderTransformOrigin="0,0.5">
+                                <Border.RenderTransform>
+                                    <TranslateTransform X="0" />
+                                </Border.RenderTransform>
+                            </Border>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsIndeterminate" Value="True">
-                            <Setter TargetName="PART_Indicator" Property="Background" Value="Transparent" />
-                            <Setter TargetName="TrackBorder" Property="Background">
-                                <Setter.Value>
-                                    <VisualBrush TileMode="Tile" Viewport="0,0,32,6" ViewportUnits="Absolute" Viewbox="0,0,32,6" ViewboxUnits="Absolute">
-                                        <VisualBrush.Visual>
-                                            <Border Background="{DynamicResource ColorBrush3}" CornerRadius="3" Width="16" Height="6" />
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="PART_Indicator" Property="Opacity" Value="0" />
+                            <Setter TargetName="IndeterminateBar" Property="Opacity" Value="0.8" />
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
-                                    <Storyboard RepeatBehavior="Forever">
-                                        <DoubleAnimation Storyboard.TargetProperty="(Border.Background).(VisualBrush.Viewbox).X"
-                                                         From="-32" To="32" Duration="0:0:1.2" />
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                        <DoubleAnimation Storyboard.TargetName="IndeterminateBar"
+                                            Storyboard.TargetProperty="(Border.RenderTransform).(TranslateTransform.X)"
+                                            From="-60" To="500" Duration="0:0:1.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="IndeterminateBar"
+                                            Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
