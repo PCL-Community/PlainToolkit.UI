@@ -1,0 +1,53 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- PROGRESSBAR — Modern minimalist, theme-aware track + indicator -->
+    <Style TargetType="ProgressBar" x:Key="PlainProgressBar">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Height" Value="6" />
+        <Setter Property="MinHeight" Value="4" />
+        <Setter Property="Background" Value="{DynamicResource ColorBrushGray6}" />
+        <Setter Property="Foreground" Value="{DynamicResource ColorBrush3}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Border x:Name="TrackBorder"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="3"
+                            BorderThickness="0">
+                        <Border x:Name="PART_Indicator"
+                                Background="{TemplateBinding Foreground}"
+                                CornerRadius="3"
+                                HorizontalAlignment="Left"
+                                SnapsToDevicePixels="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsIndeterminate" Value="True">
+                            <Setter TargetName="PART_Indicator" Property="Background" Value="Transparent" />
+                            <Setter TargetName="TrackBorder" Property="Background">
+                                <Setter.Value>
+                                    <VisualBrush TileMode="Tile" Viewport="0,0,32,6" ViewportUnits="Absolute" Viewbox="0,0,32,6" ViewboxUnits="Absolute">
+                                        <VisualBrush.Visual>
+                                            <Border Background="{DynamicResource ColorBrush3}" CornerRadius="3" Width="16" Height="6" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation Storyboard.TargetProperty="(Border.Background).(VisualBrush.Viewbox).X"
+                                                         From="-32" To="32" Duration="0:0:1.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="ProgressBar" BasedOn="{StaticResource PlainProgressBar}" />
+
+</ResourceDictionary>

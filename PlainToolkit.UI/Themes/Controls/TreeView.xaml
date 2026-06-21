@@ -1,0 +1,172 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- TREEVIEW — Clean hierarchical list with accent selection bar -->
+    <Style TargetType="TreeView" x:Key="PlainTreeView">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="{DynamicResource ColorBrushTransparentBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ColorBrushGray5}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{DynamicResource ColorBrush1}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource PlainTreeViewItem}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TreeView">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="3">
+                        <ScrollViewer Padding="4"
+                                      Focusable="False"
+                                      VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Auto">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- TREEVIEWITEM — Hover overlay + accent left bar + toggle chevron -->
+    <Style TargetType="TreeViewItem" x:Key="PlainTreeViewItem">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{DynamicResource ColorBrush1}" />
+        <Setter Property="Background" Value="{DynamicResource ColorBrushTransparent}" />
+        <Setter Property="Padding" Value="6,4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TreeViewItem">
+                    <StackPanel>
+                        <Border x:Name="ItemBorder"
+                                Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Hover overlay -->
+                                <Border x:Name="HoverBg"
+                                        Grid.ColumnSpan="2"
+                                        Background="{DynamicResource ColorBrush8}"
+                                        Opacity="0" IsHitTestVisible="False"
+                                        CornerRadius="3" />
+
+                                <!-- Accent bar -->
+                                <Border x:Name="AccentBar"
+                                        Grid.Column="0"
+                                        Width="3" HorizontalAlignment="Left"
+                                        Background="{DynamicResource ColorBrush3}"
+                                        CornerRadius="2"
+                                        Opacity="0"
+                                        Margin="-4,0,0,0" />
+
+                                <!-- Content row: toggle + glyph + header -->
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="4,0,0,0">
+                                    <!-- Toggle button (chevron) -->
+                                    <ToggleButton x:Name="Expander"
+                                                  Width="16" Height="16"
+                                                  IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                                  Visibility="Collapsed"
+                                                  Margin="0,0,4,0"
+                                                  Background="Transparent"
+                                                  BorderThickness="0">
+                                        <ToggleButton.Template>
+                                            <ControlTemplate TargetType="ToggleButton">
+                                                <Path x:Name="Chevron"
+                                                      Fill="{DynamicResource ColorBrushGray3}"
+                                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                      Data="M4,6L8,10 12,6"
+                                                      Stroke="{DynamicResource ColorBrushGray3}"
+                                                      StrokeThickness="1.5"
+                                                      StrokeLineJoin="Round"
+                                                      Width="12" Height="8"
+                                                      RenderTransformOrigin="0.5,0.5">
+                                                    <Path.RenderTransform>
+                                                        <RotateTransform Angle="0" />
+                                                    </Path.RenderTransform>
+                                                </Path>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Trigger.EnterActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetName="Chevron"
+                                                                        Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                                                        To="90" Duration="0:0:0.15" />
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </Trigger.EnterActions>
+                                                        <Trigger.ExitActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetName="Chevron"
+                                                                        Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                                                        To="0" Duration="0:0:0.15" />
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </Trigger.ExitActions>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </ToggleButton.Template>
+                                    </ToggleButton>
+
+                                    <!-- Content -->
+                                    <ContentPresenter x:Name="PART_Header"
+                                                      ContentSource="Header"
+                                                      VerticalAlignment="Center"
+                                                      SnapsToDevicePixels="True" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Child items -->
+                        <ItemsPresenter x:Name="ItemsHost" Visibility="Collapsed" Margin="16,0,0,0" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="ItemsHost" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="HasItems" Value="True">
+                            <Setter TargetName="Expander" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="AccentBar" Property="Opacity" Value="1" />
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource ColorBrush7}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBg"
+                                            Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBg"
+                                            Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.12" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="TreeView" BasedOn="{StaticResource PlainTreeView}" />
+    <Style TargetType="TreeViewItem" BasedOn="{StaticResource PlainTreeViewItem}" />
+
+</ResourceDictionary>

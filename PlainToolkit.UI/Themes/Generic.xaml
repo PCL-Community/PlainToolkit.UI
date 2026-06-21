@@ -23,6 +23,12 @@
         <ResourceDictionary Source="Controls/DataGrid.xaml" />
         <ResourceDictionary Source="Controls/TabControl.xaml" />
         <ResourceDictionary Source="Controls/Card.xaml" />
+        <ResourceDictionary Source="Controls/ProgressBar.xaml" />
+        <ResourceDictionary Source="Controls/Expander.xaml" />
+        <ResourceDictionary Source="Controls/TreeView.xaml" />
+        <ResourceDictionary Source="Controls/GroupBox.xaml" />
+        <ResourceDictionary Source="Controls/Menu.xaml" />
+        <ResourceDictionary Source="Controls/StatusBar.xaml" />
         <!-- ColorsDark.xaml is always loaded but reordered at runtime for light/dark. -->
         <!-- In light mode it sits before Colors.xaml (Colors.xaml wins).              -->
         <!-- In dark  mode it sits after  Colors.xaml (ColorsDark.xaml wins).          -->
