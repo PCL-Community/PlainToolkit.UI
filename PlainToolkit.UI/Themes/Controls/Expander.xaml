@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- EXPANDER — Minimal header with chevron toggle, animated content reveal -->
+    <!-- EXPANDER — Clean header with animated chevron toggle, hover highlight, content reveal -->
     <Style TargetType="Expander" x:Key="PlainExpander">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -19,28 +19,111 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <!-- Header -->
+                            <!-- Header ToggleButton (captures clicks to toggle IsExpanded) -->
                             <ToggleButton x:Name="HeaderToggle"
                                           Grid.Row="0"
                                           IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           HorizontalAlignment="Stretch"
-                                          HorizontalContentAlignment="Left"
-                                          Padding="10,7"
+                                          HorizontalContentAlignment="Stretch"
+                                          Padding="0"
                                           Background="Transparent"
                                           BorderThickness="0"
-                                          Foreground="{TemplateBinding Foreground}"
-                                          FontSize="{TemplateBinding FontSize}"
-                                          Content="{TemplateBinding Header}"
-                                          ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                                          Cursor="Hand"
+                                          Focusable="False">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="HeaderBar"
+                                                Background="Transparent"
+                                                Padding="8,6"
+                                                CornerRadius="3,3,0,0">
+                                            <Grid>
+                                                <Border x:Name="HoverBg"
+                                                        Background="{DynamicResource ColorBrush7}"
+                                                        CornerRadius="3,3,0,0" Opacity="0"
+                                                        IsHitTestVisible="False" />
+                                                <StackPanel Orientation="Horizontal">
+                                                    <!-- Chevron arrow -->
+                                                    <Path x:Name="Chevron"
+                                                          Fill="{DynamicResource ColorBrushGray3}"
+                                                          Data="M0,0L5,4 0,8"
+                                                          Stroke="{DynamicResource ColorBrushGray3}"
+                                                          StrokeThickness="1.5"
+                                                          StrokeLineJoin="Round"
+                                                          Width="6" Height="9"
+                                                          VerticalAlignment="Center"
+                                                          Margin="0,0,8,0"
+                                                          RenderTransformOrigin="0.5,0.5">
+                                                        <Path.RenderTransform>
+                                                            <RotateTransform Angle="0" />
+                                                        </Path.RenderTransform>
+                                                    </Path>
+                                                    <!-- Title text -->
+                                                    <ContentPresenter Content="{Binding Content, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                                                      RecognizesAccessKey="True"
+                                                                      VerticalAlignment="Center"
+                                                                      SnapsToDevicePixels="True" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetName="Chevron"
+                                                                Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                                                To="90" Duration="0:0:0.15" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetName="Chevron"
+                                                                Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                                                To="0" Duration="0:0:0.15" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetName="HoverBg"
+                                                                Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetName="HoverBg"
+                                                                Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.12" />
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+
+                            <!-- Separator when expanded -->
+                            <Border x:Name="Separator"
+                                    Grid.Row="1"
+                                    Height="1"
+                                    Background="{DynamicResource ColorBrushGray6}"
+                                    Opacity="0"
+                                    Margin="0" />
 
                             <!-- Content (collapsible) -->
-                            <Border x:Name="ContentHost"
-                                    Grid.Row="1"
-                                    Background="{DynamicResource ColorBrushTransparent}"
-                                    Padding="12,4,12,10">
+                            <Border Grid.Row="2"
+                                    Padding="12,8,12,12">
                                 <ContentPresenter x:Name="PART_Content"
                                                   Visibility="Collapsed"
                                                   SnapsToDevicePixels="True" />
@@ -50,6 +133,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="True">
                             <Setter TargetName="PART_Content" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Separator" Property="Opacity" Value="1" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

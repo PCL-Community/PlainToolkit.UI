@@ -30,94 +30,65 @@
         </Setter>
     </Style>
 
-    <!-- TREEVIEWITEM — Hover overlay + accent left bar + toggle chevron -->
+    <!-- TREEVIEWITEM — Full-row hover, accent left bar, animated chevron -->
     <Style TargetType="TreeViewItem" x:Key="PlainTreeViewItem">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="{DynamicResource ColorBrush1}" />
         <Setter Property="Background" Value="{DynamicResource ColorBrushTransparent}" />
-        <Setter Property="Padding" Value="6,4" />
+        <Setter Property="Padding" Value="4,3" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TreeViewItem">
                     <StackPanel>
-                        <Border x:Name="ItemBorder"
+                        <!-- Row: accent bar + hover + expander + content -->
+                        <Border x:Name="RowBorder"
                                 Background="{TemplateBinding Background}"
                                 Padding="{TemplateBinding Padding}"
+                                CornerRadius="3"
                                 SnapsToDevicePixels="True">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <!-- Hover overlay -->
+                                <!-- Hover overlay — full row -->
                                 <Border x:Name="HoverBg"
-                                        Grid.ColumnSpan="2"
-                                        Background="{DynamicResource ColorBrush8}"
-                                        Opacity="0" IsHitTestVisible="False"
-                                        CornerRadius="3" />
+                                        Background="{DynamicResource ColorBrush7}"
+                                        CornerRadius="3"
+                                        Opacity="0"
+                                        IsHitTestVisible="False" />
 
-                                <!-- Accent bar -->
+                                <!-- Accent bar (left edge) -->
                                 <Border x:Name="AccentBar"
-                                        Grid.Column="0"
-                                        Width="3" HorizontalAlignment="Left"
+                                        Width="3"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Stretch"
                                         Background="{DynamicResource ColorBrush3}"
                                         CornerRadius="2"
                                         Opacity="0"
                                         Margin="-4,0,0,0" />
 
-                                <!-- Content row: toggle + glyph + header -->
-                                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="4,0,0,0">
-                                    <!-- Toggle button (chevron) -->
-                                    <ToggleButton x:Name="Expander"
-                                                  Width="16" Height="16"
-                                                  IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
-                                                  Visibility="Collapsed"
-                                                  Margin="0,0,4,0"
-                                                  Background="Transparent"
-                                                  BorderThickness="0">
-                                        <ToggleButton.Template>
-                                            <ControlTemplate TargetType="ToggleButton">
-                                                <Path x:Name="Chevron"
-                                                      Fill="{DynamicResource ColorBrushGray3}"
-                                                      HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                      Data="M4,6L8,10 12,6"
-                                                      Stroke="{DynamicResource ColorBrushGray3}"
-                                                      StrokeThickness="1.5"
-                                                      StrokeLineJoin="Round"
-                                                      Width="12" Height="8"
-                                                      RenderTransformOrigin="0.5,0.5">
-                                                    <Path.RenderTransform>
-                                                        <RotateTransform Angle="0" />
-                                                    </Path.RenderTransform>
-                                                </Path>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsChecked" Value="True">
-                                                        <Trigger.EnterActions>
-                                                            <BeginStoryboard>
-                                                                <Storyboard>
-                                                                    <DoubleAnimation Storyboard.TargetName="Chevron"
-                                                                        Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
-                                                                        To="90" Duration="0:0:0.15" />
-                                                                </Storyboard>
-                                                            </BeginStoryboard>
-                                                        </Trigger.EnterActions>
-                                                        <Trigger.ExitActions>
-                                                            <BeginStoryboard>
-                                                                <Storyboard>
-                                                                    <DoubleAnimation Storyboard.TargetName="Chevron"
-                                                                        Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
-                                                                        To="0" Duration="0:0:0.15" />
-                                                                </Storyboard>
-                                                            </BeginStoryboard>
-                                                        </Trigger.ExitActions>
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </ToggleButton.Template>
-                                    </ToggleButton>
+                                <!-- Header row: chevron indicator + content -->
+                                <StackPanel Orientation="Horizontal" Margin="4,0,0,0">
+                                    <!-- Chevron expand indicator (visual only, not interactive) -->
+                                    <Border x:Name="ChevronHost"
+                                            Width="16" Height="16"
+                                            Visibility="Collapsed"
+                                            Margin="0,0,4,0"
+                                            Background="Transparent"
+                                            VerticalAlignment="Center">
+                                        <Path x:Name="Chevron"
+                                              Fill="{DynamicResource ColorBrushGray3}"
+                                              Data="M3,5L8,10 13,5"
+                                              Stroke="{DynamicResource ColorBrushGray3}"
+                                              StrokeThickness="1.5"
+                                              StrokeLineJoin="Round"
+                                              Width="10" Height="8"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="0" />
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Border>
 
                                     <!-- Content -->
                                     <ContentPresenter x:Name="PART_Header"
@@ -128,19 +99,37 @@
                             </Grid>
                         </Border>
 
-                        <!-- Child items -->
-                        <ItemsPresenter x:Name="ItemsHost" Visibility="Collapsed" Margin="16,0,0,0" />
+                        <!-- Child items (indented) -->
+                        <ItemsPresenter x:Name="ItemsHost" Visibility="Collapsed" Margin="18,0,0,0" />
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="True">
                             <Setter TargetName="ItemsHost" Property="Visibility" Value="Visible" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Chevron"
+                                            Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                            To="90" Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Chevron"
+                                            Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                            To="0" Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="HasItems" Value="True">
-                            <Setter TargetName="Expander" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="ChevronHost" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="AccentBar" Property="Opacity" Value="1" />
-                            <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource ColorBrush7}" />
+                            <Setter TargetName="RowBorder" Property="Background" Value="{DynamicResource ColorBrush8}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.EnterActions>
